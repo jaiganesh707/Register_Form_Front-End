@@ -1,0 +1,17 @@
+.card-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #007bff #f1f1f1;
+}
+
+.card-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.card-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.card-scroll::-webkit-scrollbar-thumb {
+  background: #007bff;
+  border-radius: 4px;
+}

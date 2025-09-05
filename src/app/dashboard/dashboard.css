@@ -1,0 +1,123 @@
+/* Dashboard Specific Styles */
+.welcome-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 2rem;
+  border-radius: 15px;
+  margin-bottom: 2rem;
+}
+
+.card-section {
+  padding: 1rem;
+}
+
+.card-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #ddd transparent;
+}
+
+.card-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.card-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.card-scroll::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.card-scroll::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.slide-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+  border-radius: 12px;
+}
+
+.slide-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+}
+
+.user-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.table th {
+  border-top: none;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.table td {
+  vertical-align: middle;
+  padding: 1rem 0.75rem;
+}
+
+.badge {
+  font-size: 0.75em;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .welcome-section {
+    padding: 1.5rem;
+  }
+  
+  .card-scroll {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .slide-card {
+    min-width: 100% !important;
+  }
+  
+  .table-responsive {
+    font-size: 0.9rem;
+  }
+  
+  .user-section {
+    padding: 1rem;
+  }
+}
+
+/* Animation for smooth loading */
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Hover effects for table rows */
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+  transition: background-color 0.2s ease;
+}
+
+
+
+
+.sidebar {
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  border-right: 1px solid #ddd;
+}
+
+.list-group-item {
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}

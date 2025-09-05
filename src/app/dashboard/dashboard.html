@@ -1,0 +1,66 @@
+<app-header></app-header>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Left Sidebar -->
+    <div class="col-md-3 bg-light p-3 sidebar">
+      <h5 class="text-center mb-3">Actions</h5>
+      <div class="mt-4 text-center">
+        <button class="btn btn-primary w-100" (click)="loadUsers()">
+          <i class="fas fa-users"></i> Show Users
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-md-9 p-4">
+      <!-- Centered Slider -->
+      <div class="d-flex justify-content-center mb-4">
+        <div id="carouselExample" class="carousel slide w-75" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item" *ngFor="let slide of slides; let i = index" [class.active]="i === 0">
+              <img [src]="slide.image" class="d-block w-100 rounded" alt="Slide">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Users Table -->
+      <div *ngIf="users.length > 0" class="mt-4">
+        <h3>User List</h3>
+        <table class="table table-bordered table-striped">
+          <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>User Code</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Roles</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>{{ user.id }}</td>
+              <td>{{ user.userCode }}</td>
+              <td>{{ user.username }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.roles.join(', ') }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="users.length === 0 && hasDataLoaded" class="alert alert-info mt-4">
+        No users found.
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-fooder></app-fooder>
