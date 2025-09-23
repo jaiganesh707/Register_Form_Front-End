@@ -17,7 +17,7 @@ interface ApiResponse<T> {
 export class Auth {
   private live_url = 'https://register-form-is46.onrender.com/';  // Spring Boot backend URL
   private local_url = 'http://localhost:8081/';  // Local backend URL for testing
-  private user_url=this.live_url;
+  private user_url=this.local_url;
 
   constructor(private http: HttpClient, private tokenStorage: TokenStorage) {}
 
