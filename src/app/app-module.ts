@@ -9,6 +9,8 @@ import { Register } from './register/register';
 import { Dashboard } from './dashboard/dashboard';
 import { Header } from './header/header';
 import { Fooder } from './fooder/fooder';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { Fooder } from './fooder/fooder';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FontAwesomeModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),

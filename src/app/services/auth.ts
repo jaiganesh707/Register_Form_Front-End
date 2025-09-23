@@ -5,11 +5,11 @@ import { TokenStorage } from './token-storage';
 import { User } from '../dashboard/dashboard';
 
 
-interface ApiResponse {
+interface ApiResponse<T> {
   timestamp: string;
   status: number;
   message: string;
-  data: User[];
+  data: T;
 }
 @Injectable({
   providedIn: 'root'
@@ -20,6 +20,14 @@ export class Auth {
   private user_url=this.live_url;
 
   constructor(private http: HttpClient, private tokenStorage: TokenStorage) {}
+
+  // Common header builder
+  private getAuthHeaders(): HttpHeaders {
+    const token = this.tokenStorage.getAccessToken();
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+  }
 
   login(username: string, password: string): Observable<any> {
     return this.http.post(`${this.user_url}api/auth/signin`, { username, password });
@@ -34,11 +42,16 @@ export class Auth {
     return this.http.post(`${this.user_url}api/auth/refresh-token`, { token });
   }
 
-  getAllUsers(){
-    const token = this.tokenStorage.getAccessToken();
-    let headers = new HttpHeaders();
-    return this.http.get<ApiResponse>(`${this.user_url}user/`, { headers: {
-      Authorization: `Bearer ${token}`
-    } });
+  getAllUsers() : Observable<ApiResponse<User[]>> {
+    return this.http.get<ApiResponse<User[]>>(`${this.user_url}user/list`, { headers: this.getAuthHeaders()} );
+  }
+
+  getUser(id: number): Observable<any> {
+    return this.http.get<any>(`${this.user_url}user/${id}`, {  headers: this.getAuthHeaders() });
+  } 
+
+  deleteUser(id: number): Observable<any> {
+    return this.http.post(`${this.user_url}user/delete/${id}`,{},
+    { headers: this.getAuthHeaders()});
   }
 }

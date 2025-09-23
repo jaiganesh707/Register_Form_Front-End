@@ -4,10 +4,11 @@ import { TokenStorage } from '../services/token-storage';
 import { Auth } from '../services/auth';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
+import { faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export interface User {
   id: number;
-  userCode: string;
+  userCode: string; 
   username: string;
   email: string;
   password: string;
@@ -29,12 +30,15 @@ interface JwtPayload {
 })
 
 export class Dashboard implements OnInit {
+  faEye = faEye;
+  faTrash = faTrash;
   username: string = '';
-  email: string = '';
+  email: string = ''; 
   users: User[] = [];
   isLoading: boolean = false;
   errorMessage: string = '';
-  hasDataLoaded: boolean = false;
+  hasDataLoaded: boolean = false; 
+  selectedUser: User | null = null;   // ✅ add selected user for modal
 
 slides = [
   { image: 'https://picsum.photos/seed/1/700/300' },
@@ -97,4 +101,73 @@ loadUsers(): void {
     },
   });
   } 
+
+
+private userCache = new Map<number, User>();
+// selectedUser: any = null;
+loading: boolean = false;
+
+//view user details in modal
+   viewUser(id: number): void {
+      this.loading = true;
+    this.selectedUser = null;
+
+     if (this.userCache.has(id)) {
+    this.selectedUser = this.userCache.get(id)!;
+    this.openModal();
+    return;
+  }
+    this.auth.getUser(id).subscribe({
+      next: (response: any) => {
+        const user = response?.data || response;
+      this.selectedUser = user;
+      this.loading = false;
+
+      // ✅ Save in cache
+      this.userCache.set(id, user);
+
+      this.openModal();
+    },
+    error: (error) => {
+      console.error('Error fetching user:', error);
+      this.loading = false;
+      alert('Failed to load user details');
+    }
+  });
+  }
+
+
+private openModal(): void {
+  const modalElement = document.getElementById('userDetailModal');
+  if (modalElement) {
+    const modal = new (window as any).bootstrap.Modal(modalElement);
+    modal.show(); 
+  }
+}
+  // ✅ delete user
+  deleteUser(id: number): void {
+    if (!confirm('Are you sure you want to delete this user?')) return;
+    this.auth.deleteUser(id).subscribe({
+      next: () => {
+        this.users = this.users.filter(u => u.id !== id);
+        alert('User deleted successfully');
+      },
+      error: (error) => {
+        console.error('Error deleting user:', error);
+        alert('Failed to delete user');
+      }
+    });
+  }
+
+  refreshUser(id: number): void {
+  this.auth.getUser(id).subscribe({
+    next: (response: any) => {
+      const user = response?.data || response;
+      this.selectedUser = user;
+      this.userCache.set(id, user); // update cache
+    },
+    error: (err) => console.error('Error refreshing user:', err)
+  });
+}
+
 }
