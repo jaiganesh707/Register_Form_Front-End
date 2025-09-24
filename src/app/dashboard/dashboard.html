@@ -86,11 +86,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" *ngIf="selectedUser">
-        <p><strong>ID:</strong> {{ selectedUser.id }}</p>
-        <p><strong>User Code:</strong> {{ selectedUser.userCode }}</p>
-        <p><strong>Username:</strong> {{ selectedUser.username }}</p>
-        <p><strong>Email:</strong> {{ selectedUser.email }}</p>
-        <p><strong>Roles:</strong> {{ selectedUser.roles.join(', ') }}</p>
+        <p><strong>ID:</strong> {{ selectedUser?.id }}</p>
+        <p><strong>User Code:</strong> {{ selectedUser?.userCode }}</p>
+        <p><strong>Username:</strong> {{ selectedUser?.username }}</p>
+        <p><strong>Email:</strong> {{ selectedUser?.email }}</p>
+        <p><strong>Roles:</strong> {{ selectedUser?.roles?.join(', ') }}</p>
       </div>
     </div>
   </div>

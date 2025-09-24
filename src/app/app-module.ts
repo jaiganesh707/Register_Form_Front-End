@@ -10,6 +10,8 @@ import { Dashboard } from './dashboard/dashboard';
 import { Header } from './header/header';
 import { Fooder } from './fooder/fooder';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './services/auth.interceptor';
 
 
 @NgModule({
@@ -33,7 +35,12 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideClientHydration(withEventReplay()),
-      provideHttpClient(withFetch())
+      provideHttpClient(withFetch()),
+       {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [App]
 })

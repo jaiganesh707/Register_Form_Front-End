@@ -11,7 +11,6 @@ export interface User {
   userCode: string; 
   username: string;
   email: string;
-  password: string;
   roles: string[];
 }
 
@@ -119,14 +118,16 @@ loading: boolean = false;
   }
     this.auth.getUser(id).subscribe({
       next: (response: any) => {
-        const user = response?.data || response;
+      const user = response?.data || response;
       this.selectedUser = user;
       this.loading = false;
 
       // ✅ Save in cache
       this.userCache.set(id, user);
+this.cdr.detectChanges();   // ✅ force Angular to update modal
 
       this.openModal();
+      return;
     },
     error: (error) => {
       console.error('Error fetching user:', error);
@@ -165,8 +166,16 @@ private openModal(): void {
       const user = response?.data || response;
       this.selectedUser = user;
       this.userCache.set(id, user); // update cache
+
+            this.loading = false;
+   this.cdr.detectChanges();  // ✅ important
+      this.openModal();
     },
-    error: (err) => console.error('Error refreshing user:', err)
+    error: (err) => {
+      console.error('Error refreshing user:', err);
+     this.loading = false;
+      alert('Failed to load user details');
+    }
   });
 }
 
