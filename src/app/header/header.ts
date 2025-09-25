@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit ,PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
+import { TokenStorage } from '../services/token-storage';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +14,7 @@ username: string = '';
   email: string = '';
 
  constructor(@Inject(PLATFORM_ID) private platformId: Object,
-              private router: Router) {}
+              private router: Router,private tokenStorage: TokenStorage) {}
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       const user = localStorage.getItem("user");
@@ -29,6 +30,8 @@ username: string = '';
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem("user");
       localStorage.removeItem("authToken");
+      
+      this.tokenStorage.clearTokens();
     }
 
     // Navigate to login
